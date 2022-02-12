@@ -19,6 +19,8 @@ $comments_stmt = $db->prepare(
     VALUES (:id, :postId, :name, :email, :body);",
 );
 
+$db->beginTransaction();
+
 foreach ($posts as $post) {
     $posts_stmt->execute($post);
 }
@@ -26,6 +28,8 @@ foreach ($posts as $post) {
 foreach ($comments as $comment) {
     $comments_stmt->execute($comment);
 }
+
+$db->commit();
 
 echo sprintf(
     'Загружено %s записей и %s комментариев',
