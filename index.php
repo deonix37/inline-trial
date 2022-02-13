@@ -1,5 +1,5 @@
 <?php
-  if (isset($_POST['comment_body']) && strlen($_POST['comment_body']) >= 3) {
+  if (isset($_GET['comment_body']) && strlen($_GET['comment_body']) >= 3) {
     $db = new PDO('sqlite:' . __DIR__ . '/db.sqlite3');
 
     $posts = $db->prepare(
@@ -8,7 +8,7 @@
       JOIN post ON comment.post_id = post.id
       WHERE comment.body LIKE ?;',
     );
-    $posts->execute(["%{$_POST['comment_body']}%"]);
+    $posts->execute(["%{$_GET['comment_body']}%"]);
   }
 ?>
 
@@ -22,7 +22,7 @@
 <body>
   <div>
     <h2>Найти записи</h2>
-    <form method="POST">
+    <form>
       <label>
         Текст комментария:
         <input name='comment_body' minlength="3" placeholder="lorem" required>
@@ -32,7 +32,7 @@
   </div>
   <?php if (isset($posts)): ?>
     <div>
-      <h2>Результат по запросу <?= $_POST['comment_body'] ?>:</h2>
+      <h2>Результат по запросу <?= $_GET['comment_body'] ?>:</h2>
       <?php foreach ($posts as $post): ?>
         <div style="margin-bottom: 20px; padding: 10px; width: 500px; border: 1px solid black;">
           <div><b>Запись</b>: <?= $post['title'] ?></div>
