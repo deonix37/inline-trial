@@ -32,7 +32,7 @@
   </div>
   <?php if (isset($posts)): ?>
     <div>
-      <h2>Результат по запросу <?= $_GET['comment_body'] ?>:</h2>
+      <h2>Результат по запросу <?= htmlspecialchars($_GET['comment_body']) ?>:</h2>
       <?php foreach ($posts as $post): ?>
         <div style="margin-bottom: 20px; padding: 10px; width: 500px; border: 1px solid black;">
           <div><b>Запись</b>: <?= $post['title'] ?></div>
